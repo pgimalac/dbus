@@ -117,6 +117,14 @@ type exportedMethod struct {
 	reflect.Value
 }
 
+func (m exportedMethod) Method(int) reflect.Method {
+	panic("functions do not have methods")
+}
+
+func (m exportedMethod) MethodByName(string) (reflect.Method, bool) {
+	panic("functions do not have methods")
+}
+
 func (m exportedMethod) Call(args ...interface{}) ([]interface{}, error) {
 	t := m.Type()
 
