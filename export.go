@@ -279,9 +279,9 @@ func (conn *Conn) Emit(path ObjectPath, name string, values ...interface{}) erro
 // the given combination of path and interface.
 //
 // Export returns an error if path is not a valid path name.
-func (conn *Conn) Export(v interface{}, path ObjectPath, iface string) error {
-	return conn.ExportWithMap(v, nil, path, iface)
-}
+// func (conn *Conn) Export(v interface{}, path ObjectPath, iface string) error {
+// 	return conn.ExportWithMap(v, nil, path, iface)
+// }
 
 // ExportAll registers all exported methods defined by the given object on
 // the message bus.
@@ -291,18 +291,18 @@ func (conn *Conn) Export(v interface{}, path ObjectPath, iface string) error {
 // type parameter to your method signature. If the error returned is not nil,
 // it is sent back to the caller as an error. Otherwise, a method reply is
 // sent with the other return values as its body.
-func (conn *Conn) ExportAll(v interface{}, path ObjectPath, iface string) error {
-	return conn.export(getAllMethods(v, nil), path, iface, false)
-}
+// func (conn *Conn) ExportAll(v interface{}, path ObjectPath, iface string) error {
+// 	return conn.export(getAllMethods(v, nil), path, iface, false)
+// }
 
 // ExportWithMap works exactly like Export but provides the ability to remap
 // method names (e.g. export a lower-case method).
 //
 // The keys in the map are the real method names (exported on the struct), and
 // the values are the method names to be exported on DBus.
-func (conn *Conn) ExportWithMap(v interface{}, mapping map[string]string, path ObjectPath, iface string) error {
-	return conn.export(getMethods(v, mapping), path, iface, false)
-}
+// func (conn *Conn) ExportWithMap(v interface{}, mapping map[string]string, path ObjectPath, iface string) error {
+// 	return conn.export(getMethods(v, mapping), path, iface, false)
+// }
 
 // ExportSubtree works exactly like Export but registers the given value for
 // an entire subtree rather under the root path provided.
@@ -314,18 +314,18 @@ func (conn *Conn) ExportWithMap(v interface{}, mapping map[string]string, path O
 // Note that more specific export paths take precedence over less specific. For
 // example, a method call using the ObjectPath /foo/bar/baz will call a method
 // exported on /foo/bar before a method exported on /foo.
-func (conn *Conn) ExportSubtree(v interface{}, path ObjectPath, iface string) error {
-	return conn.ExportSubtreeWithMap(v, nil, path, iface)
-}
+// func (conn *Conn) ExportSubtree(v interface{}, path ObjectPath, iface string) error {
+// 	return conn.ExportSubtreeWithMap(v, nil, path, iface)
+// }
 
 // ExportSubtreeWithMap works exactly like ExportSubtree but provides the
 // ability to remap method names (e.g. export a lower-case method).
 //
 // The keys in the map are the real method names (exported on the struct), and
 // the values are the method names to be exported on DBus.
-func (conn *Conn) ExportSubtreeWithMap(v interface{}, mapping map[string]string, path ObjectPath, iface string) error {
-	return conn.export(getMethods(v, mapping), path, iface, true)
-}
+// func (conn *Conn) ExportSubtreeWithMap(v interface{}, mapping map[string]string, path ObjectPath, iface string) error {
+// 	return conn.export(getMethods(v, mapping), path, iface, true)
+// }
 
 // ExportMethodTable like Export registers the given methods as an object
 // on the message bus. Unlike Export the it uses a method table to define
@@ -337,14 +337,14 @@ func (conn *Conn) ExportSubtreeWithMap(v interface{}, mapping map[string]string,
 // methods on the fly.
 //
 // Any non-function objects in the method table are ignored.
-func (conn *Conn) ExportMethodTable(methods map[string]interface{}, path ObjectPath, iface string) error {
-	return conn.exportMethodTable(methods, path, iface, false)
-}
+// func (conn *Conn) ExportMethodTable(methods map[string]interface{}, path ObjectPath, iface string) error {
+// 	return conn.exportMethodTable(methods, path, iface, false)
+// }
 
 // Like ExportSubtree, but with the same caveats as ExportMethodTable.
-func (conn *Conn) ExportSubtreeMethodTable(methods map[string]interface{}, path ObjectPath, iface string) error {
-	return conn.exportMethodTable(methods, path, iface, true)
-}
+// func (conn *Conn) ExportSubtreeMethodTable(methods map[string]interface{}, path ObjectPath, iface string) error {
+// 	return conn.exportMethodTable(methods, path, iface, true)
+// }
 
 func (conn *Conn) exportMethodTable(methods map[string]interface{}, path ObjectPath, iface string, includeSubtree bool) error {
 	var out map[string]reflect.Value
